@@ -14,6 +14,10 @@ class OpenAINode:
                     "multiline": False,
                     "default": "http://127.0.0.1:5000/v1"
                 }),
+                "model": ("STRING", {
+                    "multiline": False,
+                    "default": "gpt-4o-mini"
+                }),
                 "api_key": ("STRING", {
                     "multiline": False,
                     "default": "BadPanda"
@@ -54,7 +58,7 @@ class OpenAINode:
 
     CATEGORY = "OpenAIapi"
 
-    def get_completion(self, prompt, api_url, api_key, temperature, sys_prefix, stop_token, max_tokens, seed, model="local model"):
+    def get_completion(self, prompt, api_url, api_key, temperature, sys_prefix, stop_token, max_tokens, seed, model):
         try:
             openai.base_url = api_url
             openai.api_key = api_key
