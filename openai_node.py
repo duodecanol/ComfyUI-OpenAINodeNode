@@ -56,13 +56,14 @@ class OpenAINode:
 
     def get_completion(self, prompt, api_url, api_key, temperature, sys_prefix, stop_token, max_tokens, seed, model="local model"):
         try:
-            openai.api_base = api_url
+            openai.base_url = api_url
             openai.api_key = api_key
 
             
             messages = [{"role": "system", "content": sys_prefix},{"role": "user", "content": prompt}]
-            
-            response = openai.ChatCompletion.create(
+
+            client = openai.OpenAI(api_key=api_key, base_url=api_url)
+            response = client.chat.completion.create(
                 model=model,
                 messages=messages,
                 temperature=temperature,
@@ -70,7 +71,7 @@ class OpenAINode:
                 stop=stop_token,
             )
 
-            return (response.choices[0].message["content"],)
+            return (response.choices[0].message.content,)
 
         except Exception as e:
             error_message = f"Error: {str(e)}"
