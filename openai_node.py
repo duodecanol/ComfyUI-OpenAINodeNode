@@ -67,7 +67,7 @@ class OpenAINode:
             messages = [{"role": "system", "content": sys_prefix},{"role": "user", "content": prompt}]
 
             client = openai.OpenAI(api_key=api_key, base_url=api_url)
-            response = client.chat.completion.create(
+            response = client.chat.completions.create(
                 model=model,
                 messages=messages,
                 temperature=temperature,
