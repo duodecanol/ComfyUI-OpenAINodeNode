@@ -30,6 +30,22 @@ class OpenAINode:
                     "round": 0.01,
                     "display": "number"
                 }),
+                "frequency_penalty": ("FLOAT", {
+                    "default": 0,
+                    "min": -2.0,
+                    "max": 2.0,
+                    "step": 0.01,
+                    "round": 0.01,
+                    "display": "number"
+                }),
+                "presence_penalty": ("FLOAT", {
+                    "default": 0,
+                    "min": -2.0,
+                    "max": 2.0,
+                    "step": 0.01,
+                    "round": 0.01,
+                    "display": "number"
+                }),
                 "sys_prefix": ("STRING", {
                     "multiline": True,
                     "default": "You are a prompt generation AI. your task is to take a user input for a stable difusion prompt and output and expand the supplied prompt in a stable difusion format to provide better output. Do not deviate from the format. Do not output anything other than a stable diffusion prompt."
@@ -58,7 +74,7 @@ class OpenAINode:
 
     CATEGORY = "OpenAIapi"
 
-    def get_completion(self, prompt, api_url, api_key, temperature, sys_prefix, stop_token, max_tokens, seed, model):
+    def get_completion(self, prompt, api_url, api_key, temperature, frequency_penalty, presence_penalty, sys_prefix, stop_token, max_tokens, seed, model):
         try:
             openai.base_url = api_url
             openai.api_key = api_key
@@ -71,6 +87,8 @@ class OpenAINode:
                 model=model,
                 messages=messages,
                 temperature=temperature,
+                frequency_penalty=frequency_penalty,
+                presence_penalty=presence_penalty,
                 max_tokens=max_tokens,
                 stop=stop_token,
             )
